@@ -24,7 +24,7 @@ import Catalogo from 'src/views/invetarios/Catalogo'
 
 const fields = ['ean','alterno', 'nombre', 'inventario', 'acciones']
 
-const BeoContainer = (props) => {
+const BeoContainer = ( props ) => {
 
     const [ queryText, setQueryText ] = useState(undefined)
     const [ selectValue, setSelectValue ] = useState('nombre')
@@ -49,9 +49,18 @@ const BeoContainer = (props) => {
         setQueryText(e.target.value)
     }
 
+    const handleSelectChange = ( e ) => {
+        setSelectValue(e.target.value)
+    }
+
     const handleSearchButton = () => {
-        if(selectValue === 'nombre')
-        send('QUERY_TEXT', { query: queryText })
+        if(selectValue === 'nombre'){
+            send('QUERY_TEXT', { query: queryText })
+        }else if(selectValue === 'ean'){
+            send('QUERY_EAN', { query: queryText })
+        }else if(selectValue === 'alterno'){
+            send('QUERY_ALTERNO', { query: queryText })
+        }
     }
 
     return(
@@ -59,13 +68,19 @@ const BeoContainer = (props) => {
     
     <CRow className="row-cols-1 justify-content-center mb-3 mt-2 col-12">
                 <CInput className="col-8 col-sm-6" placeholder="Buscar productos" id="search" onChange={handleInputChange} value={queryText}/>
-                <CSelect className="custom-select-lg col-2 ml-1 d-none d-sm-flex" onChange={(e) => setSelectValue(e.target.value)} value={selectValue}>
+                <CSelect className="custom-select-lg col-2 ml-1 d-none d-sm-flex" onChange={handleSelectChange} value={selectValue}>
                     <option value="nombre">Nombre</option>
                     <option value="ean">EAN</option>
                     <option value="alterno">Alterno</option>
                 </CSelect>
                 <CButton className="col-sm-2 col-3 ml-1 btn-github" onClick={handleSearchButton} >Buscar</CButton>
     </CRow>
+    
+    {state.matches('idle') && (
+        <div>
+            <div className="text-lg-center">Puedes realizar tu busqueda por palabras clave, codigo Alterno o EAN</div>
+        </div>)
+        }
 
     {state.matches('querySuccess') && match.isExact ? (
     <CRow>

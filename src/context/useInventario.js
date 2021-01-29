@@ -17,7 +17,7 @@ export const useInvetario = Machine({
                 onDone: {
                     target: 'success',
                     actions: assign({
-                        inventarioData: (context, event)  => event.data
+                        inventarioData: (_, event)  => event.data
                     })
                 }
                 
@@ -30,7 +30,29 @@ export const useInvetario = Machine({
                 onDone: {
                     target: 'querySuccess',
                     actions: assign({
-                        userDataSearch: (context, event) => event.data
+                        userDataSearch: (_, event) => event.data
+                    })
+                }
+            }
+        },
+        findByEan: {
+            invoke: {
+                src: InventarioController.findByEan,
+                onDone:{
+                    target: 'querySuccess',
+                    actions: assign({
+                        userDataSearch: (_, event) => event.data
+                    })
+                }
+            }
+        },
+        findByAlterno: {
+            invoke: {
+                src: InventarioController.findByAlterno,
+                onDone:{
+                    target: 'querySuccess',
+                    actions: assign({
+                        userDataSearch: (_, event) => event.data
                     })
                 }
             }
@@ -40,6 +62,8 @@ export const useInvetario = Machine({
     },
     on:{
         LOAD_INVENTARIO: 'load_inventario',
-        QUERY_TEXT: 'query_Text'
+        QUERY_TEXT: 'query_Text',
+        QUERY_EAN: 'findByEan',
+        QUERY_ALTERNO: 'findByAlterno'
     },
 })

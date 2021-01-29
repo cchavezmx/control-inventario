@@ -8,10 +8,23 @@ export default {
     loadAllData: async() => {
         const response = await api.get('/productos')
         .then(res => res.data.productos)
+
         return response
     },
-    queryText: async( context, event ) => {
+    queryText: async( _, event ) => {
         const querySearch = await api.get(`/search/?text=${event.query}`)
+        .then(res => res.data.message)
+
+        return querySearch
+    },
+    findByEan: async(_, event) => {
+        const querySearch = await api.get(`/ean/${event.query}`)
+        .then(res => res.data.message)
+
+        return querySearch
+    },
+    findByAlterno: async(_, event) => {
+        const querySearch = await api.get(`/alterno/${event.query}`)
         .then(res => res.data.message)
 
         return querySearch
