@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react'
+import React, { useMemo } from 'react'
 import {
     CButton,
     CModal,
@@ -15,9 +15,25 @@ import {
     CForm
 
 } from '@coreui/react'
+
 import classNames from 'classnames'
 
+import { useForm, Controller } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
+import * as yup from 'yup'
+
+import { useMachine } from '@xstate/react'
+import { useInvetario } from '../../../context/useInventario'
+
+const schemaValidation = yup.object().shape({
+    addInventario: yup.number().moreThan(-1).integer().optional(),
+    ubicacion: yup.string().required(),
+    almacen: yup.string().required()
+})
+
 const ModalFormInventario = ({ modal, setModal, payload }) => {
+
+    const [ state, send ] = useMachine(useInvetario)
 
     const dateMongo = useMemo(() => {
 
@@ -26,51 +42,40 @@ const ModalFormInventario = ({ modal, setModal, payload }) => {
         const hoy = new Date()
 
         if(payload?.updatedAt){
-            const dateMongo =  new Intl.DateTimeFormat('es-MX', { day: "2-digit" }).format(dateUpdate) 
+            const dateMongo =  new Intl.DateTimeFormat('es-MX', { day :"2-digit" }).format(dateUpdate) 
             const dateHoy =  new Intl.DateTimeFormat('es-MX', { day: "2-digit" }).format(hoy)
             return countDays.format(dateMongo - dateHoy, 'day')
 
-        }else{
+        }else if( !payload.inventario || !payload?.updatedAt ){
             // para que no de error
-            return new Date()
+            return 'No existe datos de registros anteriores'
         }
     })
 
+    
+
     // TODO cambiar por from hook y validation
+    const { handleSubmit, control, errors } =useForm({
+        resolver: yupResolver(schemaValidation),
+        defaultValues: { almacen: payload.almacen, ubicacion: payload.ubicacion, addInventario: 0 }
+    })
+    const onSubmit = ( e ) => {
 
-    const [ error, setError ] = useState(undefined)
-
-    const [ ubicacion, setUbicacion ] = useState(payload.ubicacion)
-    const handledUbicacion = ( e ) => {
-        setUbicacion(e.target.value)
-    }
-
-    const [ almacen, setAlmacen ] = useState(payload.almacen)
-    const handeledAlmacen = ( e ) => {
-        setAlmacen(e.target.value)
-    }
-
-    const [ suma, setSuma ] = useState(0)
-    const handledSuma = (e) => {
-        if(e.target.value < 0 ){
-            setError({ error: true, suma: 'El número debe ser mayor a CERO'})
-        }else {
-            setSuma(e.target.value)
+        const updateData = {
+            almacen: e.almacen,
+            ubicacion: e.ubicacion,
+            inventario: Number(payload.inventario) + Number(e.addInventario)
         }
+        
+        console.log( updateData )
+        send('UPDATE', { _id: payload._id, data: updateData })
     }
 
-    const handledSaveBtn = () => {
-        if(!ubicacion && !almacen ){
-            setError({ error: true, ubicacion: 'proporcione la ubicación y el almacén'})
-        }else{
-            console.log('algun momento', ubicacion, almacen, suma )
-        }
-    }
-
+    // TODO: Cuando updateTermina regresar a la raiz 
     
     return(
         <div>
-        <CForm>
+        <CForm onSubmit={handleSubmit(onSubmit)}>
         <CModal 
         show={modal} 
         onClose={setModal}
@@ -87,33 +92,70 @@ const ModalFormInventario = ({ modal, setModal, payload }) => {
                 <CCardBody>
                     <CFormGroup>
                     <CLabel htmlFor="ean">EAN</CLabel>
-                    <CInput id="ean" value={payload.ean} disabled />
+                    <CInput id="ean" defaultValue={payload.ean} disabled />
                     </CFormGroup>
+
                     <CFormGroup>
                     <CLabel htmlFor="inventario col">Inventario</CLabel>
                     <small 
-                        id="passwordHelpBlock" 
+                        id="diasdHelpBlock" 
                         className="form-text text-muted">
-                        <div className="conteo">{`Ultimo conteo: ${payload.inventario} piezas ${dateMongo}`}</div>
+                        <div 
+                            className="textRedColor">{ payload?.inventario === null 
+                            ? `No hay registro de un conteo anterior` 
+                            : `Ultimo conteo: ${payload.inventario} piezas ${dateMongo}`}
+                            </div>
                         </small>
-                    <CInput 
-                        type="number" 
-                        id="sumaInv" 
-                        className={classNames('col-5', { 'form-control is-invalid' : error?.suma  })} 
-                        value={suma} 
-                        onChange={handledSuma}/>
-                    { error?.suma && <p>{error.suma} </p>}
+                    <Controller 
+                        name="addInventario"
+                        control={ control }
+                        render={({ onChange, value }) => 
+                        <CInput 
+                            type="number" 
+                            name="addInventario"
+                            id="invetario" 
+                            className={classNames('col-5', { 'form-control is-invalid' : errors?.inventario  })} 
+                            value={ value } 
+                            onChange={ onChange }/>
+                    }
+                    />
+                    { errors?.addInventario && <p className="textRedColor">*Valor requerido</p>}            
                     </CFormGroup>
+
                     <CFormGroup>
                     <CLabel htmlFor="ubicacion">Ubicación</CLabel>
-                    <CInput id="ubicacion" value={ubicacion} onChange={handledUbicacion} />
+                    <Controller 
+                        name="ubicacion"
+                        control={control}
+                        render={({ onChange, value }) => 
+                        <CInput 
+                            id="ubicacion" 
+                            value={value} 
+                            className={classNames('col-5', { 'form-control is-invalid' : errors?.ubicacion  })} 
+                            onChange={onChange} />
+                    }
+                    />
+                    { errors?.ubicacion && <p className="textRedColor">*Valor requerido</p>} 
                     </CFormGroup>
+
                     <CFormGroup row className="my-0">
                     <CCol col="12">
                         <CFormGroup>
                         <CLabel htmlFor="almacen">Almacén</CLabel>
-                        <CInput id="almacen" value={almacen} onChange={handeledAlmacen}/>
+                    <Controller 
+                        name="almacen"
+                        control={control}
+                        render={({ onChange, value }) => 
+                        <CInput 
+                            id="almacen" 
+                            className={classNames('col-5', { 'form-control is-invalid' : errors?.almacen  })} 
+                            value={ value } 
+                            onChange={ onChange }/>
+                    }
+                    />
+                    { errors?.almacen && <p className="textRedColor">*Valor requerido</p>} 
                         </CFormGroup>
+
                     </CCol>
                     </CFormGroup>
                     </CCardBody>
@@ -121,7 +163,7 @@ const ModalFormInventario = ({ modal, setModal, payload }) => {
                     </CCol>
             </CModalBody>
             <CModalFooter className="justify-content-center">
-            <CButton className="btn-danger" onClick={handledSaveBtn}>Guardar</CButton>
+            <CButton className="btn-danger" type="onSubmit">Guardar</CButton>
             <CButton 
                 className="btn-facebook"
                 onClick={() => setModal(false)}

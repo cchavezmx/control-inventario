@@ -57,13 +57,22 @@ export const useInvetario = Machine({
                 }
             }
         },
-        querySuccess: {}
+        querySuccess: {},
+        update: {
+            invoke: {
+                src: InventarioController.update,
+                onDone: {
+                target: 'querySuccess',
+                }
+            }
+        }
 
     },
     on:{
         LOAD_INVENTARIO: 'load_inventario',
         QUERY_TEXT: 'query_Text',
         QUERY_EAN: 'findByEan',
-        QUERY_ALTERNO: 'findByAlterno'
+        QUERY_ALTERNO: 'findByAlterno',
+        UPDATE: 'update',
     },
 })

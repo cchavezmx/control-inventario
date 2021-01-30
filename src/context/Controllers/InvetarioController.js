@@ -28,5 +28,15 @@ export default {
         .then(res => res.data.message)
 
         return querySearch
+    },
+    update: async(_, event ) => {
+
+        const { _id, data } = event
+        console.log(data)
+        const resp = await api.patch(`/update/${_id}`, data )
+        .then(res => res )
+        console.log(resp)
+        return resp 
+
     }
 }

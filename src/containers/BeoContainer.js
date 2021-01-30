@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-
 import {
     CCol,
     CContainer,
@@ -18,9 +17,6 @@ import { Switch, Route } from 'react-router-dom'
 import { useMachine } from '@xstate/react'
 import { useInvetario } from '../context/useInventario'
 import Catalogo from 'src/views/invetarios/Catalogo'
-
-// import Catalogo from '../views/invetarios/Catalogo'
-// import MongoCarga from '../context/MongoData'
 
 const fields = ['ean','alterno', 'nombre', 'inventario', 'acciones']
 
@@ -66,6 +62,8 @@ const BeoContainer = ( props ) => {
     return(
     <CContainer fluid>            
     
+    { match.isExact  && 
+    (
     <CRow className="row-cols-1 justify-content-center mb-3 mt-2 col-12">
                 <CInput className="col-8 col-sm-6" placeholder="Buscar productos" id="search" onChange={handleInputChange} value={queryText}/>
                 <CSelect className="custom-select-lg col-2 ml-1 d-none d-sm-flex" onChange={handleSelectChange} value={selectValue}>
@@ -75,6 +73,7 @@ const BeoContainer = ( props ) => {
                 </CSelect>
                 <CButton className="col-sm-2 col-3 ml-1 btn-github" onClick={handleSearchButton} >Buscar</CButton>
     </CRow>
+    )}
     
     {state.matches('idle') && (
         <div>
@@ -101,7 +100,7 @@ const BeoContainer = ( props ) => {
             'acciones':
                 (item)=>(
                 <td>
-                <CLink to={`/productos/${item._id}`} onClick={() => setProdInventario(item)} >
+                <CLink to={`/productos/${ item._id }`} onClick={() => setProdInventario(item)} >
                 <CButton className="btn-success">Ver</CButton> 
                 </CLink>
                 </td>
