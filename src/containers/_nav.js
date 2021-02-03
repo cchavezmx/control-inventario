@@ -1,6 +1,6 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCoffee, faBoxOpen, faAddressCard, faBookOpen } from '@fortawesome/free-solid-svg-icons'
+import { faCoffee, faBoxOpen, faAddressCard, faBookOpen, faBarcode } from '@fortawesome/free-solid-svg-icons'
 
 const _nav =  [
   {
@@ -26,7 +26,6 @@ const _nav =  [
   {
     _tag: 'CSidebarNavDropdown',
     name: 'Almacen',
-    route: '/base',
     icon: <FontAwesomeIcon icon={faBoxOpen} size="1x" className="mr-3" />,
     _children: [
       {
@@ -34,6 +33,12 @@ const _nav =  [
         name: 'Catálogo',
         icon: <FontAwesomeIcon icon={faBookOpen} size="1x" className="mr-3"/>,
         to: '/base/breadcrumbs',
+      },
+      {
+        _tag: 'CSidebarNavItem',
+        name: 'Captura de Inventario',
+        icon: <FontAwesomeIcon icon={faBarcode} size="1x" className="mr-3"/>,
+        to: '/catalogo/caputura',
       },
     ],
   },

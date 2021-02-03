@@ -7,7 +7,8 @@ export const useInvetario = Machine({
     initial: 'idle',
     context: {
         inventarioData: [],
-        userDataSearch: []
+        userDataSearch: [],
+        prodInventario: []
     },
     states: {
         idle: {},
@@ -64,8 +65,20 @@ export const useInvetario = Machine({
                 onDone: {
                 target: 'querySuccess',
                 }
+            },
+        },
+        search: {
+            invoke: {
+                src: InventarioController.search_ID,
+                onDone: {
+                    target: 'search_success',
+                    actions: assign({
+                        prodInventario: (ctx, event) =>  event.data
+                    })
+                }
             }
-        }
+        },
+        search_success: {}
 
     },
     on:{
@@ -74,5 +87,6 @@ export const useInvetario = Machine({
         QUERY_EAN: 'findByEan',
         QUERY_ALTERNO: 'findByAlterno',
         UPDATE: 'update',
+        SEARCH: 'search'
     },
 })

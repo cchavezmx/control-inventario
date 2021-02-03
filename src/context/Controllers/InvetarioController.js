@@ -1,3 +1,4 @@
+/* eslint-disable import/no-anonymous-default-export */
 import axios from 'axios'
 
 const api = axios.create({
@@ -30,13 +31,19 @@ export default {
         return querySearch
     },
     update: async(_, event ) => {
-
         const { _id, data } = event
-        console.log(data)
         const resp = await api.patch(`/update/${_id}`, data )
         .then(res => res )
-        console.log(resp)
-        return resp 
 
+        return resp 
+    }, 
+    search_ID: async(_, event ) => {
+        
+        const resp = await api.get(`/producto/${event.id}`)
+        .then(res => res.data.message)
+
+        console.log(resp)
+
+        return resp 
     }
 }

@@ -5,18 +5,11 @@ import {
   CToggler,
   CHeaderBrand,
   CHeaderNav,
-  CHeaderNavItem,
-  CHeaderNavLink,
-  CInput,
-  CSubheader,
-  CBreadcrumbRouter,
-  CLink,
-  CButton
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 
 // routes config
-import routes from '../routes'
+// import routes from '../routes'
 
 import { 
   TheHeaderDropdown,

@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React, { useMemo, useEffect } from 'react'
 import {
     CButton,
     CModal,
@@ -12,7 +12,7 @@ import {
     CFormGroup,
     CInput,
     CLabel,
-    CForm
+    CForm,
 
 } from '@coreui/react'
 
@@ -25,23 +25,48 @@ import * as yup from 'yup'
 import { useMachine } from '@xstate/react'
 import { useInvetario } from '../../../context/useInventario'
 
+
 const schemaValidation = yup.object().shape({
     addInventario: yup.number().moreThan(-1).integer().optional(),
     ubicacion: yup.string().required(),
     almacen: yup.string().required()
 })
 
-const ModalFormInventario = ({ modal, setModal, payload }) => {
+const ModalFormInventario = ({ modal, setModal, payload, history }) => {
 
     const [ state, send ] = useMachine(useInvetario)
+    
+    useEffect(() => {
+        let done = false
+        if(!done && state.matches('querySuccess')){
+            setModal(false)
+            // history.push('/')
+            done = true
+        }
+        return () => done = false
+    })
 
+    
     const dateMongo = useMemo(() => {
 
         const dateUpdate = new Date(payload?.updatedAt)
+            
         const countDays = new Intl.RelativeTimeFormat('es', { style: 'narrow' })
         const hoy = new Date()
 
-        if(payload?.updatedAt){
+        const dateMongo =  new Intl.DateTimeFormat('es-MX', { day :"2-digit" }).format(dateUpdate) 
+        const dateHoy =  new Intl.DateTimeFormat('es-MX', { day: "2-digit" }).format(hoy)
+
+        const dayDif = dateMongo - dateHoy
+
+        if(payload?.updatedAt && Number(dayDif) > 5 ){
+            const day = new Intl.DateTimeFormat('es-MX', { dateStyle: 'long' }).format(dateUpdate)
+            return `desde el ${day}`
+
+        }else if( dayDif === 0){
+            return `contado hoy: por Usuario`
+
+        }else if(payload?.updatedAt && Number(dayDif) < 5 ){
             const dateMongo =  new Intl.DateTimeFormat('es-MX', { day :"2-digit" }).format(dateUpdate) 
             const dateHoy =  new Intl.DateTimeFormat('es-MX', { day: "2-digit" }).format(hoy)
             return countDays.format(dateMongo - dateHoy, 'day')
@@ -51,8 +76,6 @@ const ModalFormInventario = ({ modal, setModal, payload }) => {
             return 'No existe datos de registros anteriores'
         }
     })
-
-    
 
     // TODO cambiar por from hook y validation
     const { handleSubmit, control, errors } =useForm({
@@ -67,7 +90,6 @@ const ModalFormInventario = ({ modal, setModal, payload }) => {
             inventario: Number(payload.inventario) + Number(e.addInventario)
         }
         
-        console.log( updateData )
         send('UPDATE', { _id: payload._id, data: updateData })
     }
 
