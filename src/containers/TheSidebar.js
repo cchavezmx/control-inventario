@@ -12,8 +12,6 @@ import {
   CSidebarNavItem,
 } from '@coreui/react'
 
-import CIcon from '@coreui/icons-react'
-
 // sidebar nav config
 import navigation from './_nav'
 
@@ -24,15 +22,17 @@ const TheSidebar = () => {
   return (
     <CSidebar
       show={show}
+      className="bg-github"
       onShowChange={(val) => dispatch({type: 'set', sidebarShow: val })}
     >
       <CSidebarBrand className="d-md-down-none" to="/">
-        <CIcon
+        {/* <CIcon
           className="c-sidebar-brand-full"
           name="logo-negative"
           height={35}
         />
-
+        <CImg src={logoITA} className="col-3"/> */}
+      <h5 className="textLogoGit">Grupo Intecsa</h5>
       </CSidebarBrand>
 
         <CSidebarNav>

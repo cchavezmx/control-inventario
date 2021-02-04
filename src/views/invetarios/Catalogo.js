@@ -50,8 +50,6 @@ const Catalogo = ({ match }) => {
 
     const { prodInventario } = state.context
 
-    console.log(history)
-
     return(
 
         <CContainer fluid className="mt-2">
@@ -74,7 +72,7 @@ const Catalogo = ({ match }) => {
         </CCol>
 
         <div>
-            <CRow className="col-12">
+            <CRow className="col-12 col-sm-12 align-items-center">
                 {/* TODO hay que implementar la carga de la fotografia directo a la base de datos */}
                 {/* <CCol className="col-6">
                     <CLabel htmlFor="image-upload">
@@ -82,7 +80,7 @@ const Catalogo = ({ match }) => {
                     </CLabel>
                 <CInput type="file" className="image-upload" id="image-upload" />    
                 </CCol> */}
-                <CCol>
+                <CCol className="">
                     <CImg className="img-fluid" src={prodInventario?.img ? prodInventario.img : imgInv} onClick={() => setModalFoto(true)}/>
                 </CCol>
                 <CCol className="col-12 col-sm-6">
@@ -91,13 +89,13 @@ const Catalogo = ({ match }) => {
                     { prodInventario.nombre }
                 </CCardHeader>
                 <CRow className="d-flex">
-                    <CCol className="col-6 col-sm-12">
+                    <CCol className="col-12 col-sm-6">
                         <CLabel>Inventario</CLabel>
-                            <CInput className="form-color form-control-lg col-6 col-sm-4 mb-2" disabled={true} defaultValue={prodInventario.inventario}></CInput>
+                            <CInput className="form-color form-control-lg col-5 col-sm-10 mb-2" disabled={true} defaultValue={prodInventario.inventario}></CInput>
                         <CLabel>Ubicación</CLabel>
-                            <CInput className="mb-2 from-color" disabled={true} defaultValue={prodInventario.ubicacion}></CInput>
+                            <CInput className="mb-2 col-12 from-color" disabled={true} defaultValue={prodInventario.ubicacion}></CInput>
                         <CLabel>Almacén</CLabel>
-                            <CInput className="mb-2 form-control" disabled={true} defaultValue={prodInventario.almacen}></CInput>
+                            <CInput className="mb-2 col-12 form-control" disabled={true} defaultValue={prodInventario.almacen}></CInput>
                     </CCol>
                 </CRow>
                 <CRow>
@@ -114,7 +112,7 @@ const Catalogo = ({ match }) => {
             </CRow>
         </div>
 
-        <ModalFromInventario modal={modal} setModal={setModal} payload={ prodInventario } history={history} /> 
+        <ModalFromInventario modal={modal} setModal={setModal} payload={ prodInventario } /> 
         <ModalFotografia modalFoto={modalFoto} setModalFoto={setModalFoto} payload={prodInventario} />   
 
         </div>    

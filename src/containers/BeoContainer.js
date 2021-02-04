@@ -14,8 +14,8 @@ const BeoContainer = ({ match }) => {
     return(
     <CContainer fluid>            
     
+    {/* agregar un componente donde se vean los ultimos movimientos de inventario */}
     { match.isExact && <h1>BeoContainer Bienvenido</h1>}
-
 
     <Switch>
         <Route path={`/catalogo/caputura`} render={(props) => <CapturaInventario {...props}/> } />

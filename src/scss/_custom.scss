@@ -1,5 +1,5 @@
 // Here you can add other styles
-
+@import url('https://fonts.googleapis.com/css2?family=Crete+Round&display=swap');
 
 .custom--inv--img {
     max-width: 400px;
@@ -19,4 +19,14 @@
 
 .textRedColor {
     color: rgba(255, 0, 0, 0.836);
+}
+
+.textLogoGit {
+    font-family: 'Crete Round', serif;
+    font-size: 1.3rem;
+}
+
+.textHeader {
+    font-family: 'Crete Round', serif;
+    
 }

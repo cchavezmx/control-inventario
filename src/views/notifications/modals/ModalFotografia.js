@@ -26,6 +26,7 @@ const ModalFotografia = ({ modalFoto, setModalFoto, payload }) => {
     useEffect(() => {
         if(state.matches('querySuccess')){
             setModalFoto(false)
+            window.location.reload()
         }
     })
 

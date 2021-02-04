@@ -32,7 +32,7 @@ const schemaValidation = yup.object().shape({
     almacen: yup.string().required()
 })
 
-const ModalFormInventario = ({ modal, setModal, payload, history }) => {
+const ModalFormInventario = ({ modal, setModal, payload }) => {
 
     const [ state, send ] = useMachine(useInvetario)
     
@@ -41,6 +41,7 @@ const ModalFormInventario = ({ modal, setModal, payload, history }) => {
         if(!done && state.matches('querySuccess')){
             setModal(false)
             // history.push('/')
+            window.location.reload()
             done = true
         }
         return () => done = false
