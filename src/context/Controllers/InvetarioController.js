@@ -41,9 +41,7 @@ export default {
         
         const resp = await api.get(`/producto/${event.id}`)
         .then(res => res.data.message)
-
-        console.log(resp)
-
+        
         return resp 
     }
 }

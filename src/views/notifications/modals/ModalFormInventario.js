@@ -58,8 +58,8 @@ const ModalFormInventario = ({ modal, setModal, payload }) => {
         const dateMongo =  new Intl.DateTimeFormat('es-MX', { day :"2-digit" }).format(dateUpdate) 
         const dateHoy =  new Intl.DateTimeFormat('es-MX', { day: "2-digit" }).format(hoy)
 
-        const dayDif = dateMongo - dateHoy
 
+        const dayDif = dateMongo - dateHoy
         if(payload?.updatedAt && Number(dayDif) > 5 ){
             const day = new Intl.DateTimeFormat('es-MX', { dateStyle: 'long' }).format(dateUpdate)
             return `desde el ${day}`

@@ -10,9 +10,11 @@ import {
   CCollapse,
   CFade,
   CSwitch,
-  CLink
+  CLink,
+  CIcon,
+  
 } from  '@coreui/react'
-import CIcon from '@coreui/icons-react'
+
 import { DocsLink } from 'src/reusable'
 
 

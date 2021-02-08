@@ -11,12 +11,12 @@ import CIcon from '@coreui/icons-react'
 // routes config
 // import routes from '../routes'
 
-import { 
-  TheHeaderDropdown,
-  TheHeaderDropdownMssg,
-  TheHeaderDropdownNotif,
-  TheHeaderDropdownTasks
-}  from './index'
+// import { 
+//   TheHeaderDropdown,
+//   TheHeaderDropdownMssg,
+//   TheHeaderDropdownNotif,
+//   TheHeaderDropdownTasks
+// }  from './index'
 
 const TheHeader = () => {
   const dispatch = useDispatch()
@@ -62,10 +62,10 @@ const TheHeader = () => {
           <CButton className="btn-info ml-2">Buscar</CButton>
       </CHeaderNav> */}
       <CHeaderNav className="px-3">
-        <TheHeaderDropdownNotif/>
+        {/* <TheHeaderDropdownNotif/>
         <TheHeaderDropdownTasks/>
-        <TheHeaderDropdownMssg/>
-        <TheHeaderDropdown/>
+        <TheHeaderDropdownMssg/> */}
+        {/* <TheHeaderDropdown/> */}
       </CHeaderNav>
 
     </CHeader>

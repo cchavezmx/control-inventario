@@ -46,7 +46,7 @@ const Catalogo = ({ match }) => {
         return () => {
             setDone(true)
         }
-    }, [send, setDone, done, id])
+    }, [done, id, send])
 
     const { prodInventario } = state.context
 
@@ -81,7 +81,7 @@ const Catalogo = ({ match }) => {
                 <CInput type="file" className="image-upload" id="image-upload" />    
                 </CCol> */}
                 <CCol className="">
-                    <CImg className="img-fluid" src={prodInventario?.img ? prodInventario.img : imgInv} onClick={() => setModalFoto(true)}/>
+                    <CImg className="img-fluid" src={ prodInventario?.img ? prodInventario.img : imgInv } onClick={() => setModalFoto(true)}/>
                 </CCol>
                 <CCol className="col-12 col-sm-6">
 

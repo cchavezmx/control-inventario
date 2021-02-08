@@ -3,53 +3,69 @@ import React, { useState } from 'react'
 import {
     CCol,
     CContainer,
-    CCard,
-    CCardHeader,
-    CCardBody,
-    CDataTable,
     CRow,
-    CButton,
-    CLink,
     CInput,
-    CSelect
+    CSelect,
+    CLink,
 } from '@coreui/react'
 
+import Card from '../views/Card'
 
-import { useMachine } from '@xstate/react'
-import { useInvetario } from '../context/useInventario'
+const date = new Date()
 
-const fields = ['ean','alterno', 'nombre', 'inventario', 'acciones']
+// Componentes
+const mapContainerInventarios = [
+    {
+        slug: 'lerma',
+        title: 'Lerma',
+        start: date.toDateString(),
+        end: date.toDateString(),
+        img: "/img/fachadaita.PNG"
+    },
+    {
+        slug: '1225',
+        title: '1225 - A',
+        start: date.toDateString(),
+        end: date.toDateString(),
+        img: "/img/fachadaita.PNG"
+    },  
+    {
+        slug: 'codi',
+        title: 'Codi',
+        start: date.toDateString(),
+        end: date.toDateString(),
+        img: "/img/fachadaita.PNG"
+    },  
+    {
+        slug: 'mediatension',
+        title: 'Media Tensión',
+        start: date.toDateString(),
+        end: date.toDateString(),
+        img: "/img/fachadaita.PNG"
+    }   
+]
+
 
 const CapturaInventario = ( props ) => {
+    
+    const { match } = props
 
     const [ queryText, setQueryText ] = useState(undefined)
     const [ selectValue, setSelectValue ] = useState('nombre')
 
-
-    const [ state, send ] =useMachine(useInvetario)
-    const { userDataSearch } = state.context
-    const { match } = props
-
     const handleInputChange = ( e ) => {
         setQueryText(e.target.value)
     }
-
+    
     const handleSelectChange = ( e ) => {
         setSelectValue(e.target.value)
     }
-
-    const handleSearchButton = () => {
-        if(selectValue === 'nombre'){
-            send('QUERY_TEXT', { query: queryText })
-        }else if(selectValue === 'ean'){
-            send('QUERY_EAN', { query: queryText })
-        }else if(selectValue === 'alterno'){
-            send('QUERY_ALTERNO', { query: queryText })
-        }
-    }
+    
+    console.log(queryText)
 
     return(
     <CContainer fluid>
+
     { match.isExact  && 
     (
     <CRow className="row-cols-1 justify-content-center mb-3 mt-2 col-12">
@@ -59,50 +75,21 @@ const CapturaInventario = ( props ) => {
                     <option value="ean">EAN</option>
                     <option value="alterno">Alterno</option>
                 </CSelect>
-                <CButton className="col-sm-2 col-3 ml-1 btn-github" onClick={handleSearchButton} >Buscar</CButton>
+                <CLink to={`/inventario/busqueda/${selectValue}/${queryText}`} className="col-sm-1 col-2 btn-github ml-1 text-center p-1 rounded">Buscar</CLink>
     </CRow>
     )}
     
-    {state.matches('idle') && (
-        <div>
-            <div className="text-lg-center">Puedes realizar tu busqueda por palabras clave, codigo Alterno o EAN</div>
-            {console.log(match)}
-        </div>)
-        }
+    { match.isExact && 
+    <CRow>       
+        <CCol className="mb-3 mt-2 text-center">
+        <h4>Progreso de captura por unidad de negocio</h4>
+        </CCol>
+        <div className="w-100"></div>
+        {mapContainerInventarios.map((item, index) => <Card  key={`${item.title}${index}`} props={item} /> )}
 
-    {state.matches('querySuccess') && match.isExact ? (
-    <CRow>
-    <CCol>
-        <CCard>
-        <CCardHeader>
-            {`Estos son los resultados para tu busqueda`}
-            {/* <DocsLink name="CModal"/> */}
-        </CCardHeader>
-        <CCardBody>
-        <CDataTable
-            items={userDataSearch}
-            fields={fields}
-            itemsPerPage={10}
-            pagination
-            size="lg"
-            scopedSlots = {{
-            'acciones':
-                (item)=>(
-                <td>
-                <CLink to={`/producto/${ item._id }`} >
-                <CButton className="btn-success">Ver</CButton> 
-                </CLink>
-                </td>
-                )
-
-            }}
-        />
-        </CCardBody>
-        </CCard>
-    </CCol>
     </CRow>
-        ) : null }
-    
+    }
+
     </CContainer>
     )
 }

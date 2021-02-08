@@ -6,7 +6,8 @@ import {
 import { Switch, Route } from 'react-router-dom'
 
 import CapturaInventario from './CaputraInventario'
-import Catalogo from 'src/views/invetarios/Catalogo'
+import Catalogo from '../views/invetarios/Catalogo'
+import BeoInvTabla from '../views/invetarios/BeoInvTabla'
 
 
 const BeoContainer = ({ match }) => {
@@ -20,6 +21,8 @@ const BeoContainer = ({ match }) => {
     <Switch>
         <Route path={`/catalogo/caputura`} render={(props) => <CapturaInventario {...props}/> } />
         <Route path={`/producto/:id`} render={(props) => <Catalogo {...props} /> } />
+        <Route path={`/progreso/captura/:slug`} render={(props) => <BeoInvTabla {...props} />} />
+        <Route path={`/inventario/busqueda/:selectValue/:queryText`} render={(props) => <BeoInvTabla {...props} />} />
     </Switch>    
     
     </CContainer>

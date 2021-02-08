@@ -14,17 +14,19 @@ import { useInvetario } from '../../../context/useInventario'
 
 import { useForm, Controller } from 'react-hook-form'
 
-const ModalFotografia = ({ modalFoto, setModalFoto, payload }) => {
+const ModalFotografia = ( props ) => {
+
+    const { modalFoto, setModalFoto, payload } = props
 
     const { handleSubmit, control } =useForm()
-    const [ state, send ] = useMachine(useInvetario)
+    const [ current, send ] = useMachine(useInvetario)
 
     const onSubmit = (e) => {
         send('UPDATE', { _id: payload._id, data: e })    
     }
 
     useEffect(() => {
-        if(state.matches('querySuccess')){
+        if(current.matches('querySuccess')){
             setModalFoto(false)
             window.location.reload()
         }
