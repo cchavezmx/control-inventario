@@ -33,6 +33,16 @@ const Catalogo = ({ match }) => {
     const [ done, setDone ] = useState(false)
     const [ state, send ] = useMachine(useInvetario)
 
+    const handleImgChange = () =>{
+        return(
+        <div class="d-flex justify-content-center">
+            <div class="spinner-border" role="status">
+            <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+        )
+    }
+
     const [ modal, setModal ] = useState(false)    
     const [ modalFoto, setModalFoto ] = useState(false)    
 
@@ -81,7 +91,7 @@ const Catalogo = ({ match }) => {
                 <CInput type="file" className="image-upload" id="image-upload" />    
                 </CCol> */}
                 <CCol className="">
-                    <CImg className="img-fluid img-thumbnail" src={ prodInventario?.img ? prodInventario.img : imgInv } onClick={() => setModalFoto(true)}/>
+                    <CImg onLoad={handleImgChange} className="img-fluid img-thumbnail" src={ prodInventario?.img ? prodInventario.img : imgInv } onClick={() => setModalFoto(true)}/>
                 </CCol>
                 <CCol className="col-12 col-sm-6">
 

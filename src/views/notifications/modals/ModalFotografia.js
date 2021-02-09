@@ -28,7 +28,7 @@ const ModalFotografia = ( props ) => {
     useEffect(() => {
         if(current.matches('querySuccess')){
             setModalFoto(false)
-            window.location.reload()
+            // window.location.reload()
         }
     })
 
