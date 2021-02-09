@@ -7,11 +7,11 @@ const Card = ({ props }) => {
 
     return(
         <Fragment>
-        <div className="col-12 col-sm-4 mb-3">
+        <div className="col-12 col-sm-6 col-md-4 mb-3">
         <CCardLink to={`/progreso/captura/${slug}`} className="link--color">
         <CCard>
             <CCardHeader className="bg-twitter">
-            <h6>{title}</h6>
+            <div className="text--titulos--big">{title}</div>
             </CCardHeader>
             <CCardBody>
                 <CImg src={img} alt="cosa" className="img-thumbnail" />

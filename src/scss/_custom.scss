@@ -1,5 +1,6 @@
 // Here you can add other styles
 @import url('https://fonts.googleapis.com/css2?family=Crete+Round&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Hammersmith+One&display=swap');
 
 .custom--inv--img {
     max-width: 400px;
@@ -37,4 +38,14 @@
 
 .link--color:hover{
     color: rgb(59, 59, 59);
+}
+
+.text--titulos{
+    font-family: 'Hammersmith One', sans-serif;
+}
+
+.text--titulos--big{
+    font-family: 'Hammersmith One', sans-serif;
+    font-size: large;
+    text-align: center;
 }

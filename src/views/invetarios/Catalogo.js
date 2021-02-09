@@ -54,10 +54,10 @@ const Catalogo = ({ match }) => {
 
         <CContainer fluid className="mt-2">
         
-        <CButton onClick={() => history.goBack()}>
+        <CButton className="btn-ghost-info" onClick={() => history.goBack()}>
         <h5>Regresar</h5>
         </CButton>
-
+        {state.matches('search') && <div>Cargando producto...</div>} 
         {/* cabezera */}
         {state.matches('search_success') && (
             <div>
@@ -81,7 +81,7 @@ const Catalogo = ({ match }) => {
                 <CInput type="file" className="image-upload" id="image-upload" />    
                 </CCol> */}
                 <CCol className="">
-                    <CImg className="img-fluid" src={ prodInventario?.img ? prodInventario.img : imgInv } onClick={() => setModalFoto(true)}/>
+                    <CImg className="img-fluid img-thumbnail" src={ prodInventario?.img ? prodInventario.img : imgInv } onClick={() => setModalFoto(true)}/>
                 </CCol>
                 <CCol className="col-12 col-sm-6">
 

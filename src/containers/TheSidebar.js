@@ -32,7 +32,7 @@ const TheSidebar = () => {
           height={35}
         />
         <CImg src={logoITA} className="col-3"/> */}
-      <h5 className="textLogoGit">Grupo Intecsa</h5>
+      <h5 className="textLogoGit">SGOnet</h5>
       </CSidebarBrand>
 
         <CSidebarNav>
