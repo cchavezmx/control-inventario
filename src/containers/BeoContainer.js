@@ -10,6 +10,9 @@ import CapturaInventario from './CaputraInventario'
 import Catalogo from '../views/invetarios/Catalogo'
 import BeoInvTabla from '../views/invetarios/BeoInvTabla'
 
+// rutas
+import SgoPedidos from './SgoPedidos'
+
 
 const BeoContainer = ({ match }) => {
 
@@ -54,6 +57,9 @@ const BeoContainer = ({ match }) => {
         <Route path={`/producto/:id`} render={(props) => <Catalogo {...props} /> } />
         <Route path={`/progreso/captura/:slug`} render={(props) => <BeoInvTabla {...props} />} />
         <Route path={`/inv/search/:selectValue/:queryText`} render={(props) => <BeoInvTabla {...props} />} />
+
+        {/* rutas  */}
+        <Route path={`/pedidos`} render={(props) => <SgoPedidos {...props} />}/>
     </Switch>    
     
     </CContainer>

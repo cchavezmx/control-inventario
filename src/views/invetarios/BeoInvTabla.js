@@ -42,7 +42,7 @@ const BeoInvTabla = ( props ) => {
             <BuscadorInv />
         <CCard>
             <CCardHeader>
-                { state.matches('query_Text') && <span>Estamos preparando tu busqueda</span>}
+                { state.matches('query_Text') && <span>Estamos preparando tu busqueda...</span>}
             </CCardHeader>
 
             { state.matches('querySuccess') && 
