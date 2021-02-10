@@ -1,23 +1,56 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCoffee, faBoxOpen, faAddressCard, faBookOpen, faBarcode } from '@fortawesome/free-solid-svg-icons'
+import { 
+  faIndustry,
+  faBoxOpen,
+  faBookOpen,
+  faBarcode,
+  faCoffee,
+  faTachometerAlt,
+  faUserCircle,
+  faUserShield,
+  faCommentDollar
+
+} from '@fortawesome/free-solid-svg-icons'
 
 const _nav =  [
+  {
+    _tag: 'CSidebarNavTitle',
+    _children: ['Dashboard']
+  },
+  {
+    _tag: 'CSidebarNavItem',
+    name: 'Incicio',
+    to: '/store',
+    icon: <FontAwesomeIcon icon={faTachometerAlt} size="1x" className="mr-3" />,
+  },
   {
     _tag: 'CSidebarNavTitle',
     _children: ['Herramientas']
   },
   {
     _tag: 'CSidebarNavItem',
-    name: 'Canales',
-    to: '/theme/colors',
-    icon: <FontAwesomeIcon icon={faCoffee} size="1x" className="mr-3" />,
+    name: 'Obras',
+    to: '/store',
+    icon: <FontAwesomeIcon icon={faIndustry} size="1x" className="mr-3" />,
   },
   {
     _tag: 'CSidebarNavItem',
-    name: 'Proveedores',
-    to: '/theme/colors',
-    icon: <FontAwesomeIcon icon={faAddressCard} size="1x" className="mr-3" />,
+    name: 'Recursos Humanos',
+    to: '/store',
+    icon: <FontAwesomeIcon icon={faUserCircle} size="1x" className="mr-3" />,
+  },
+  {
+    _tag: 'CSidebarNavItem',
+    name: 'SHei',
+    to: '/store',
+    icon: <FontAwesomeIcon icon={faUserShield} size="1x" className="mr-3" />,
+  },
+  {
+    _tag: 'CSidebarNavItem',
+    name: 'Finanzas',
+    to: '/store',
+    icon: <FontAwesomeIcon icon={faCommentDollar} size="1x" className="mr-3" />,
   },
   {
     _tag: 'CSidebarNavTitle',
@@ -30,9 +63,9 @@ const _nav =  [
     _children: [
       {
         _tag: 'CSidebarNavItem',
-        name: 'Catálogo',
+        name: 'Pedidos',
         icon: <FontAwesomeIcon icon={faBookOpen} size="1x" className="mr-3"/>,
-        to: '/base/breadcrumbs',
+        to: '/pedidos',
       },
       {
         _tag: 'CSidebarNavItem',
