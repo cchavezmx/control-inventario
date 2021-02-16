@@ -27,7 +27,7 @@ const BuscadorInv = () => {
     return(
     <Fragment>
     <CRow className="row-cols-1 justify-content-center mb-3 mt-2 col-12">
-        <CInput className="col-8 col-sm-6" placeholder="Buscar productos" id="search" onChange={handleInputChange} value={queryText}/>
+        <CInput className="col-8 col-sm-6" placeholder="Buscar productos, ejemplo: tornillo, clema, zapata, cable" id="search" onChange={handleInputChange} value={queryText}/>
         <CSelect className="custom-select-lg col-2 ml-1 d-none d-sm-flex" onChange={handleSelectChange} value={selectValue}>
             <option value="nombre">Nombre</option>
             <option value="ean">EAN</option>
